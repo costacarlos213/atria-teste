@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 morgan.token('body', (req: Request) => JSON.stringify(req.body));
 app.use(
   morgan(
-    `:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - "body": ':body' - ":referrer" "user: ':user' ":user-agent"`,
+    `:remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - "body": ':body' - ":referrer" ":user-agent"`,
     {
       skip: (req, res) => res.statusCode >= 400,
       stream: new LoggerStream(),

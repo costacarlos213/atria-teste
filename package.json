@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev:server": "ts-node-dev --inspect -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/server",
-    "start": "node dist/shared/server"
+    "start": "node dist/shared/server",
+    "migration:run": "ts-node-dev -r tsconfig-paths/register src/shared/database/scripts/migration-run.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -18,6 +19,7 @@
     "@babel/plugin-proposal-decorators": "^7.17.9",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
+    "@types/async": "^3.2.20",
     "@types/aws-sdk": "^2.7.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
@@ -48,6 +50,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",
+    "async": "^3.2.4",
     "bcrypt": "^5.0.1",
     "celebrate": "^15.0.1",
     "class-transformer": "^0.5.1",

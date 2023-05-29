@@ -1,12 +1,7 @@
+import { db_config } from '@config/database';
 import { Pool, PoolClient } from 'pg';
 
-const pool = new Pool({
-  user: process.env.PG_USER || 'postgres',
-  host: process.env.PG_HOST || 'localhost',
-  database: process.env.PG_DATABASE || 'postgres',
-  password: process.env.PG_PASSWORD,
-  port: parseInt(process.env.PG_PORT || '5432', 10),
-});
+const pool = new Pool(db_config);
 
 async function createConnection(): Promise<PoolClient> {
   const client = await pool.connect();
