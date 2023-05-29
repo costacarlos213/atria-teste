@@ -1,8 +1,8 @@
+import { MovieRepository } from '@modules/Movie/repositories/MovieRepository';
+import { IMovieRepository } from '@modules/Movie/repositories/MovieRepository.interface';
 import { container } from 'tsyringe';
 
-import './providers';
-
-import { IUserRepository } from '@modules/User/repositories/UserRepository.interface';
-import { UserRepository } from '@modules/User/repositories/UserRepository';
-
-container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
+container.registerSingleton<IMovieRepository>(
+  'MovieRepository',
+  MovieRepository,
+);

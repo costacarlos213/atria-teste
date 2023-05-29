@@ -1,9 +1,19 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-declare namespace Express {
-  export interface Request {
-    user: {
-      id: string;
-      isMaster: boolean;
-    };
-  }
-}
+type Equipment = {
+  id: string;
+  serialNumber: string;
+  model: string;
+  manufacturerId: string;
+};
+
+type Manufacturer = {
+  id: string;
+  name: string;
+};
+
+declare type JoinedEquipment = Equipment & {
+  manufacturer: Manufacturer;
+};
+
+declare type JoinedManufacturer = Manufacturer & {
+  equipments: Equipment[];
+};

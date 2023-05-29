@@ -1,13 +1,12 @@
+import { movieRouter } from '@modules/routes/movie.routes';
 import { Router, Request, Response, NextFunction } from 'express';
-
-import { userRouter } from '@modules/User/routes/user.routes';
 
 const router = Router();
 
-router.use('/user', userRouter);
+router.use('/movies', movieRouter);
 
 router.get('/', (request: Request, response: Response) =>
-  response.send('Carbon Free - 0.0.1'),
+  response.send('Atria - 1.0.0'),
 );
 
 router.use((request: Request, response: Response, next: NextFunction) => {
