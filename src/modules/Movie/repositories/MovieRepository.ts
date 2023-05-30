@@ -1,5 +1,6 @@
 import { PoolClient } from 'pg';
 import { createConnection } from '@shared/database';
+import { plainToInstance } from 'class-transformer';
 import { Movie } from '../entities/Movie';
 import { IMovieRepository } from './MovieRepository.interface';
 import { IIndexMoviesDTO } from './dto/IndexMoviesDTO';
@@ -27,7 +28,7 @@ class MovieRepository implements IMovieRepository {
       [id, title, director, genres, year, runtime, active],
     );
 
-    return rows[0];
+    return plainToInstance(Movie, rows[0] as Record<string, unknown>);
   }
 
   async index({
@@ -60,7 +61,7 @@ class MovieRepository implements IMovieRepository {
       ),
     ]);
 
-    return [rows, total];
+    return [plainToInstance(Movie, rows), total];
   }
 
   async findById(id: string): Promise<Movie | undefined> {
@@ -69,7 +70,9 @@ class MovieRepository implements IMovieRepository {
       [id],
     );
 
-    return rows[0];
+    return rows[0]
+      ? plainToInstance(Movie, rows[0] as Record<string, unknown>)
+      : undefined;
   }
 
   async delete(id: string): Promise<void> {

@@ -3,7 +3,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 export const createMovieMiddleware = celebrate({
   [Segments.BODY]: {
     title: Joi.string().required(),
-    year: Joi.string().length(4).required(),
+    year: Joi.number().min(1800).max(2100),
     runtime: Joi.number().integer().min(1).positive().required(),
     genres: Joi.array().items(Joi.string()).required(),
     director: Joi.string().required(),
@@ -26,7 +26,7 @@ export const indexMoviesMiddleware = celebrate({
 export const updateMovieMiddleware = celebrate({
   [Segments.BODY]: {
     title: Joi.string(),
-    year: Joi.string().length(4),
+    year: Joi.number().min(1800).max(2100),
     runtime: Joi.number().integer().min(1).positive(),
     genres: Joi.array().items(Joi.string()),
     director: Joi.string(),
