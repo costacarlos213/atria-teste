@@ -1,6 +1,6 @@
-import { Movie } from '@modules/Movie/entities/Movie';
+import { ICreateMovieDTO } from './CreateMovieDTO';
 
-type PartialMovie = Partial<Omit<Movie, 'created_at' | 'updated_at'>>;
+type PartialMovie = Partial<ICreateMovieDTO>;
 
 interface IUpdateMovieDTO extends PartialMovie {
   id: string;

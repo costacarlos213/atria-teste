@@ -1,50 +1,12 @@
-<img src="https://mestresdaweb.com.br/wp-content/uploads/2020/05/logo-negativo.png" />
+## 💡 Sobre o projeto
 
-# Boilerplate Backend
-
-> Feito para você ganhar tempo iniciando um novo projeto.
-
-<br/><br/>
-
-<blockquote align="center">
-  Contribua você também :D
-</blockquote>
-
-<hr/>
-
-## 💡 Sobre o boilerplate
-
-Ao invés de toda vez que você for iniciar um novo projeto backend, ter que configurar manualmente o ambiente node, express, typescript e várias outras bibliotecas que usamos durante o desenvolvimento, você pode simplesmente clonar esse repositório e correr pro abraço.
-
-## 🔥 O que ele já possui configurado?
-
-- ✅ Express<br/>
-- ✅ Typescript<br/>
-- ✅ Typeorm<br/>
-- ✅ Redis<br/>
-- ✅ Migrations<br/>
-- ✅ Seeds<br/>
-- ✅ Tratamento de erros<br/>
-- ✅ Middlewares<br/>
-- ✅ Providers<br/>
-  - ✅ Upload: Multer E S3<br/>
-  - ✅ Envio de email: Nodemailer, SES  e SendBlue<br/>
-  - ✅ Template para e-mail: Handlebars<br/>
-  - ✅ Push Notification: OneSignal<br/>
-- ✅ Módulo de usuário: CRUD<br/>
-- ✅ Autenticação: JWT e Refresh Token<br/>
-- ✅ Eslint<br/>
-- ✅ Prettier na régua (caso não funcione, verifique se a sua IDE está apontando corretamente para o arquivo do Prettier)<br/>
-- ✅ Editorconfig<br/>
-- ✅ Jest<br/>
-- ✅ Tradução para validação de entrada de dados<br/>
+API com CRUD de cinema realizado como teste para empresa Junior Atria JR. da Unicamp.
 
 ## ⚙️ Techs
 
 - Node
 - Express
-- Typeorm
-- Redis
+- Postgres
 
 ## 🏁 Como eu uso?
 
@@ -52,16 +14,8 @@ Para clonar esse projeto em sua máquina,
 Execute o seguinte comando:
 
 ```bash
-git clone https://github.com/Mestres-da-Web/boilerplate-backend-v2.git
+git clone https://github.com/costacarlos213/atria-teste
 ```
-
-Logo depois, execute o seguinte comando para retirar a origin dele que está vinculado com o repositório do boilerplate
-
-```bash
-git remote rm origin
-```
-
-Adicione o remote do seu repositório no git, mude o nome do projeto dentro do arquivo "package.json" e o nome da pasta geral do projeto.
 
 ## ✨ Instalando dependências
 
@@ -75,9 +29,28 @@ _ou_
 npm install
 ```
 
-#### 🏃‍♀️ Executando o projeto na máquina
+_obs: caso opte por instalar com o npm, lembre-se de remover os arquivos yarn.lock e yarn-error.log_
 
-Com todas as dependências instaladas, o banco de dados em execução e o ambiente configurado corretamente, agora você pode executar o back-end:
+### 🛠 Configurando variáveis de ambiente
+
+Renomeie o arquivo `.env.example` para `.env` e o preencha com os dados necessários para o funcionamento da API
+
+_obs: observe que a aplicação adotará valores padrões para todos os campos não preenchidos_
+
+## 🎲 Configurando o banco de dados
+
+Certifique-se de ter acesso à uma instância do banco de dados PostgreSQL e que o arquivo `.env` está corretamente preenchido. Para ter certeza de que tudo corra bem, por favor, certifique-se de estar conectado à um banco de dados vazio.
+Após isso, execute o seguinte comando no terminal:
+
+```bash
+yarn migration:run
+```
+
+Isso irá criar as tabelas, relações e constraints necessárias para o projeto em seu banco de dados.
+
+## 🏃‍♀️ Executando o projeto na máquina
+
+Com todas as dependências instaladas, o ambiente e o banco de dados configurado e em execução, você pode executar a API com:
 
 ```
 yarn dev:server
@@ -89,4 +62,6 @@ _ou_
 npm run dev:server
 ```
 
-E corra pro abraço 🚀!!!
+## 🕹 Interagindo com a API
+
+Todos os endpoints e parâmetros estão contidos [nesta documentação](https://documenter.getpostman.com/view/25299399/2s93mASyuL). No ambiente _Development_ está a porta e endereço padrão configurado no `.env`.
