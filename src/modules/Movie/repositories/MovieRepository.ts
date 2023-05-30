@@ -42,20 +42,25 @@ class MovieRepository implements IMovieRepository {
       },
     ] = await Promise.all([
       this.client.query(
-        `SELECT * FROM movies WHERE LOWER(title) ~~ $1 LIMIT $2 OFFSET $3`,
-        [`%${title.toLowerCase()}%`, limit, (page - 1) * limit],
+        `SELECT * FROM movies WHERE (LOWER(title) ~~ $1 OR $2::text IS NULL) LIMIT $3 OFFSET $4`,
+        [`%${title?.toLowerCase()}%`, title, limit, (page - 1) * limit],
       ),
       this.client.query(
-        `SELECT COUNT(*) FROM movies WHERE LOWER(title) ~~ $1`,
-        [`%${title.toLowerCase()}%`],
+        `SELECT COUNT(*) FROM movies WHERE (LOWER(title) ~~ $1 OR $2::text IS NULL)`,
+        [`%${title?.toLowerCase()}%`, title],
       ),
     ]);
 
     return [rows, parseInt(total, 10)];
   }
 
-  findById(id: string): Promise<Movie | undefined> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Movie | undefined> {
+    const { rows } = await this.client.query(
+      'SELECT * FROM movies WHERE id = $1',
+      [id],
+    );
+
+    return rows[0];
   }
 }
 

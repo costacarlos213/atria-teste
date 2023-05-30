@@ -19,3 +19,17 @@ export const indexMoviesMiddleware = celebrate({
     limit: Joi.number().integer().min(1).positive().default(10),
   },
 });
+
+export const updateMovieMiddleware = celebrate({
+  [Segments.BODY]: {
+    title: Joi.string(),
+    year: Joi.string().length(4),
+    runtime: Joi.number().integer().min(1).positive(),
+    genres: Joi.array().items(Joi.string()),
+    director: Joi.string(),
+    active: Joi.boolean(),
+  },
+  [Segments.PARAMS]: {
+    id: Joi.string().uuid().required(),
+  },
+});

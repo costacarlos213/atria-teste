@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   createMovieMiddleware,
   indexMoviesMiddleware,
+  updateMovieMiddleware,
 } from './vallidation/movie.validation';
 
 const movieRouter = Router();
@@ -14,6 +15,10 @@ movieRouter.post('/', createMovieMiddleware, (req, res) =>
 
 movieRouter.get('/', indexMoviesMiddleware, (req, res) =>
   movieController.index(req, res),
+);
+
+movieRouter.put('/:id', updateMovieMiddleware, (req, res) =>
+  movieController.update(req, res),
 );
 
 export { movieRouter };
