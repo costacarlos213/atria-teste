@@ -8,7 +8,7 @@ API com CRUD de cinema realizado como teste para empresa Junior Atria JR. da Uni
 - Express
 - Postgres
 
-## 🏁 Como eu uso?
+# 🏁 Como eu uso?
 
 Para clonar esse projeto em sua máquina,
 Execute o seguinte comando:
