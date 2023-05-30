@@ -34,24 +34,33 @@ class MovieRepository implements IMovieRepository {
     limit,
     page,
     title,
+    genres,
   }: IIndexMoviesDTO): Promise<[Movie[], number]> {
+    const whereClause =
+      '(LOWER(title) ~~ $1 OR $2::text IS NULL) AND (genres @> $3 OR array_length($3, 1) = 0)';
+
+    const query = `SELECT * FROM movies WHERE ${whereClause}`;
+
+    const params = [`%${title?.toLowerCase()}%`, title, genres];
+
     const [
       { rows },
       {
-        rows: [{ count: total }],
+        rows: [{ total }],
       },
     ] = await Promise.all([
+      this.client.query(`${query} LIMIT $4 OFFSET $5`, [
+        ...params,
+        limit,
+        (page - 1) * limit,
+      ]),
       this.client.query(
-        `SELECT * FROM movies WHERE (LOWER(title) ~~ $1 OR $2::text IS NULL) LIMIT $3 OFFSET $4`,
-        [`%${title?.toLowerCase()}%`, title, limit, (page - 1) * limit],
-      ),
-      this.client.query(
-        `SELECT COUNT(*) FROM movies WHERE (LOWER(title) ~~ $1 OR $2::text IS NULL)`,
-        [`%${title?.toLowerCase()}%`, title],
+        `SELECT COUNT(*)::int as total FROM movies WHERE ${whereClause}`,
+        params,
       ),
     ]);
 
-    return [rows, parseInt(total, 10)];
+    return [rows, total];
   }
 
   async findById(id: string): Promise<Movie | undefined> {

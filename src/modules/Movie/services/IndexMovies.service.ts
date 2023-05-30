@@ -15,11 +15,13 @@ class IndexMoviesService {
     limit,
     page,
     title,
+    genres,
   }: IIndexMoviesDTO): Promise<IPaginatedResponse<Movie>> {
     const [movies, total] = await this.movieRepository.index({
       page,
       limit,
       title,
+      genres,
     });
 
     return {

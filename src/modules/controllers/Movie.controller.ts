@@ -41,16 +41,24 @@ class MovieController {
   }
 
   async index(req: Request, res: Response): Promise<Response> {
-    const { page, limit, title } = req.query as typeof req.query & {
+    const { page, limit, title, genres } = req.query as typeof req.query & {
       page: number;
       limit: number;
       title: string;
+      genres?: string[] | string;
     };
+
+    let genresArray: string[] = [];
+
+    if (genres) {
+      genresArray = Array.isArray(genres) ? genres : [genres];
+    }
 
     const movies = await this.indexMovies.execute({
       page,
       limit,
       title,
+      genres: genresArray,
     });
 
     return res.status(200).json(movies);

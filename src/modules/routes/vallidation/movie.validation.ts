@@ -14,7 +14,10 @@ export const createMovieMiddleware = celebrate({
 export const indexMoviesMiddleware = celebrate({
   [Segments.QUERY]: {
     title: Joi.string(),
-    genres: Joi.array().items(Joi.string()).default([]),
+    genres: [
+      Joi.array().items(Joi.string()).default([]),
+      Joi.string().default(''),
+    ],
     page: Joi.number().integer().min(1).positive().default(1),
     limit: Joi.number().integer().min(1).positive().default(10),
   },
