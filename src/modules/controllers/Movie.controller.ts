@@ -1,4 +1,5 @@
 import { CreateMovieService } from '@modules/Movie/services/CreateMovie.service';
+import { DeleteMovieService } from '@modules/Movie/services/DeleteMovie.service';
 import { FindMovieByIdService } from '@modules/Movie/services/FindMovieById.service';
 import { IndexMoviesService } from '@modules/Movie/services/IndexMovies.service';
 import { UpdateMovieService } from '@modules/Movie/services/UpdateMovie.service';
@@ -14,11 +15,14 @@ class MovieController {
 
   showMovie: FindMovieByIdService;
 
+  deleteMovie: DeleteMovieService;
+
   constructor() {
     this.createMovie = container.resolve(CreateMovieService);
     this.indexMovies = container.resolve(IndexMoviesService);
     this.updateMovie = container.resolve(UpdateMovieService);
     this.showMovie = container.resolve(FindMovieByIdService);
+    this.deleteMovie = container.resolve(DeleteMovieService);
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -76,6 +80,14 @@ class MovieController {
     const movie = await this.showMovie.execute(id);
 
     return res.status(200).json(movie);
+  }
+
+  async delete(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    await this.deleteMovie.execute(id);
+
+    return res.status(204).send();
   }
 }
 

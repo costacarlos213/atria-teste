@@ -62,6 +62,10 @@ class MovieRepository implements IMovieRepository {
 
     return rows[0];
   }
+
+  async delete(id: string): Promise<void> {
+    await this.client.query('DELETE FROM movies WHERE id = $1', [id]);
+  }
 }
 
 export { MovieRepository };

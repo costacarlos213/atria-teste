@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   createMovieMiddleware,
   indexMoviesMiddleware,
+  showMovieMiddleware,
   updateMovieMiddleware,
 } from './vallidation/movie.validation';
 
@@ -21,6 +22,12 @@ movieRouter.put('/:id', updateMovieMiddleware, (req, res) =>
   movieController.update(req, res),
 );
 
-movieRouter.get('/:id', (req, res) => movieController.show(req, res));
+movieRouter.get('/:id', showMovieMiddleware, (req, res) =>
+  movieController.show(req, res),
+);
+
+movieRouter.delete('/:id', showMovieMiddleware, (req, res) =>
+  movieController.delete(req, res),
+);
 
 export { movieRouter };

@@ -33,3 +33,9 @@ export const updateMovieMiddleware = celebrate({
     id: Joi.string().uuid().required(),
   },
 });
+
+export const showMovieMiddleware = celebrate({
+  [Segments.PARAMS]: {
+    id: Joi.string().uuid().required(),
+  },
+});
