@@ -1,12 +1,10 @@
 import { Movie } from '../entities/Movie';
-import { IFindByGenreDTO } from './dto/FindByGenreDTO';
+import { IIndexMoviesDTO } from '../services/dto/FindMoviesByTitleDTO';
 
 interface IMovieRepository {
   save(movie: Movie): Promise<Movie>;
-  findByTitle(title: string): Promise<Movie | undefined>;
+  index(data: IIndexMoviesDTO): Promise<[Movie[], number]>;
   findById(id: string): Promise<Movie | undefined>;
-  index(page: number, limit: number): Promise<[Movie[], number]>;
-  findByGenres(data: IFindByGenreDTO): Promise<Movie[]>;
 }
 
 export { IMovieRepository };

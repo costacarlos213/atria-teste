@@ -2,7 +2,7 @@ import { PoolClient } from 'pg';
 import { createConnection } from '@shared/database';
 import { Movie } from '../entities/Movie';
 import { IMovieRepository } from './MovieRepository.interface';
-import { IFindByGenreDTO } from './dto/FindByGenreDTO';
+import { IIndexMoviesDTO } from './dto/IndexMoviesDTO';
 
 class MovieRepository implements IMovieRepository {
   private client: PoolClient;
@@ -30,19 +30,31 @@ class MovieRepository implements IMovieRepository {
     return rows[0];
   }
 
-  findByTitle(title: string): Promise<Movie | undefined> {
-    throw new Error('Method not implemented.');
+  async index({
+    limit,
+    page,
+    title,
+  }: IIndexMoviesDTO): Promise<[Movie[], number]> {
+    const [
+      { rows },
+      {
+        rows: [{ count: total }],
+      },
+    ] = await Promise.all([
+      this.client.query(
+        `SELECT * FROM movies WHERE LOWER(title) ~~ $1 LIMIT $2 OFFSET $3`,
+        [`%${title.toLowerCase()}%`, limit, (page - 1) * limit],
+      ),
+      this.client.query(
+        `SELECT COUNT(*) FROM movies WHERE LOWER(title) ~~ $1`,
+        [`%${title.toLowerCase()}%`],
+      ),
+    ]);
+
+    return [rows, parseInt(total, 10)];
   }
 
   findById(id: string): Promise<Movie | undefined> {
-    throw new Error('Method not implemented.');
-  }
-
-  index(page: number, limit: number): Promise<[Movie[], number]> {
-    throw new Error('Method not implemented.');
-  }
-
-  findByGenres(data: IFindByGenreDTO): Promise<Movie[]> {
     throw new Error('Method not implemented.');
   }
 }
