@@ -21,4 +21,6 @@ movieRouter.put('/:id', updateMovieMiddleware, (req, res) =>
   movieController.update(req, res),
 );
 
+movieRouter.get('/:id', (req, res) => movieController.show(req, res));
+
 export { movieRouter };

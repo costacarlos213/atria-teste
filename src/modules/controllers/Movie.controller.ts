@@ -1,4 +1,5 @@
 import { CreateMovieService } from '@modules/Movie/services/CreateMovie.service';
+import { FindMovieByIdService } from '@modules/Movie/services/FindMovieById.service';
 import { IndexMoviesService } from '@modules/Movie/services/IndexMovies.service';
 import { UpdateMovieService } from '@modules/Movie/services/UpdateMovie.service';
 import { Request, Response } from 'express';
@@ -11,10 +12,13 @@ class MovieController {
 
   updateMovie: UpdateMovieService;
 
+  showMovie: FindMovieByIdService;
+
   constructor() {
     this.createMovie = container.resolve(CreateMovieService);
     this.indexMovies = container.resolve(IndexMoviesService);
     this.updateMovie = container.resolve(UpdateMovieService);
+    this.showMovie = container.resolve(FindMovieByIdService);
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -62,6 +66,14 @@ class MovieController {
       title,
       year,
     });
+
+    return res.status(200).json(movie);
+  }
+
+  async show(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const movie = await this.showMovie.execute(id);
 
     return res.status(200).json(movie);
   }
