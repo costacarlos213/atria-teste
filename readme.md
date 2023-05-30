@@ -31,7 +31,7 @@ npm install
 
 _obs: caso opte por instalar com o npm, lembre-se de remover os arquivos yarn.lock e yarn-error.log_
 
-### 🛠 Configurando variáveis de ambiente
+## 🛠 Configurando variáveis de ambiente
 
 Renomeie o arquivo `.env.example` para `.env` e o preencha com os dados necessários para o funcionamento da API
 
